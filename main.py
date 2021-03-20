@@ -4,16 +4,13 @@ import django
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 django.setup()
-
 from datacenter.models import Passcard, Visit
 
 def print_passcards_from_db():
-    passcards = Passcard.objects.all()
-    for passcard in passcards:
-        print("owner_name:", passcard.owner_name,"\n",
-        "passcode:", passcard.passcode,"\n",
-        "created_at:", passcard.created_at,"\n",
-        "is_active", passcard.is_active)
+    passcard_db = Passcard.objects.all()
+    print('Количество пропусков:', Passcard.objects.count())
+    passcards = [ passcard.owner_name for passcard in passcard_db if passcard.is_active ]
+    print("Активных пропусков:", len(passcards))
         
 
 if __name__ == "__main__":
