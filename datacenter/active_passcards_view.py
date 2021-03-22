@@ -7,6 +7,8 @@ def active_passcards_view(request):
     # Программируем здесь
 
     all_passcards = Passcard.objects.filter(is_active=True)
+    all_visits = Visit.objects.all()
+    print(all_visits)
     context = {
         "active_passcards": all_passcards,  # люди с активными пропусками
     }
