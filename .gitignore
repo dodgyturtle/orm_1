@@ -133,4 +133,3 @@ images
 setup.cfg
 config/
 *.png
-settings.py
