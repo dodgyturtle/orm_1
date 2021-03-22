@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import localtime
 
 
 class Passcard(models.Model):
@@ -25,3 +26,10 @@ class Visit(models.Model):
             entered=self.entered_at,
             leaved= "leaved at " + str(self.leaved_at) if self.leaved_at else "not leaved"
         )
+    def get_duration(self):
+        user_entered = localtime(self.entered_at)
+        current_datetime = localtime().replace(microsecond=0)
+        time_in_warehouse = current_datetime - user_entered
+        return time_in_warehouse
+
+
