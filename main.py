@@ -1,18 +1,6 @@
 import os
-import sys
-import django
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
-django.setup()
-from datacenter.models import Passcard, Visit
+from django.core.management import execute_from_command_line
 
-def print_passcards_from_db():
-    passcard_db = Passcard.objects.all()
-    print('Количество пропусков:', Passcard.objects.count())
-    active_passcards = Passcard.objects.filter(is_active=True)
-    print("Активных пропусков:", len(active_passcards))
-        
-
-if __name__ == "__main__":
-    # Программируем здесь
-    print_passcards_from_db()
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings")
+execute_from_command_line("manage.py runserver 0.0.0.0:8000".split())
