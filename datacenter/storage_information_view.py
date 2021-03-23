@@ -6,11 +6,12 @@ from django.utils.timezone import localtime
 
 def format_duration(duration):
     seconds = duration.total_seconds()
-    hour = int(seconds // 3600)
+    days = int(seconds // 3600 // 24)
+    hours = int(seconds // 3600 % 24)
     minutes = int((seconds % 3600) // 60)
-    if duration.days != 0:
-        return f"{ duration.days } дней { hour } ч. { minutes } м."
-    return f"{ hour } ч. { minutes } м."
+    if days != 0:
+        return f"{ days } д. { hours } ч. { minutes } м."
+    return f"{ hours } ч. { minutes } м."
 
 
 def storage_information_view(request):
