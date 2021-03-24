@@ -31,11 +31,12 @@ class Visit(models.Model):
 
     def get_duration(self):
         user_entered_at = localtime(self.entered_at)
+            if self.leaved_at:
+                time_in_warehouse = localtime(self.leaved_at) - user_entered_at
+                return time_in_warehouse
         current_datetime = localtime().replace(microsecond=0)
         time_in_warehouse = current_datetime - user_entered_at
         return time_in_warehouse
 
     def is_visit_long(self, minutes=60):
-        visit_long = self.leaved_at - self.entered_at
-        visit_long_minutes = visit_long.seconds // 60
-        return visit_long_minutes > minutes
+        return get_duration(self) > minutes
