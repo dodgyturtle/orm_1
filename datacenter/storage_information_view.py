@@ -16,16 +16,17 @@ def format_duration(duration):
 
 def storage_information_view(request):
     non_closed_visits = []
-    all_visitors = Visit.objects.filter(leaved_at__isnull=True)
-    for visitor in all_visitors:
+    visitors = Visit.objects.filter(leaved_at__isnull=True)
+    for visitor in visitors:
         user_entered = localtime(visitor.entered_at)
         user_in_warehouse_passcard = visitor.passcard
-        duration = Visit.get_duration(visitor)
+        duration = visitor.get_duration()
         non_closed_visits.append(
             {
                 "who_entered": user_in_warehouse_passcard.owner_name,
                 "entered_at": user_entered,
                 "duration": format_duration(duration),
+                "is_strange": visitor.is_visit_long(),
             }
         )
 

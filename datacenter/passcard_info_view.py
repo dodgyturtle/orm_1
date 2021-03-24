@@ -6,16 +6,15 @@ from .storage_information_view import format_duration
 
 def passcard_info_view(request, passcode):
     passcard = Passcard.objects.get(passcode=passcode)
-    user_visits = Visit.objects.filter(passcard=passcard, leaved_at__isnull=False)
+    user_visits = Visit.objects.filter(passcard=passcard)
     this_passcard_visits = []
     for user_visit in user_visits:
-        strange_flag = Visit.is_visit_long(user_visit)
-        visit_duration = user_visit.leaved_at - user_visit.entered_at
+        visit_duration = user_visit.get_duration()
         this_passcard_visits.append(
             {
                 "entered_at": user_visit.entered_at,
                 "duration": format_duration(visit_duration),
-                "is_strange": strange_flag,
+                "is_strange": user_visit.is_visit_long(),
             }
         )
     context = {"passcard": passcard, "this_passcard_visits": this_passcard_visits}
