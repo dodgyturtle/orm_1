@@ -133,3 +133,9 @@ images
 setup.cfg
 config/
 *.png
+project/settings.py
+.replit
+poetry.lock
+pyproject.toml
+.gitattributes
+
