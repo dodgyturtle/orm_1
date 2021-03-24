@@ -41,3 +41,12 @@ class Visit(models.Model):
     def is_visit_long(self, minutes=60):
         visit_minutes = self.get_duration().total_seconds() // 60
         return visit_minutes > minutes
+    
+    def format_duration(self):
+        seconds = self.get_duration().total_seconds()
+        days = int(seconds // 3600 // 24)
+        hours = int(seconds // 3600 % 24)
+        minutes = int((seconds % 3600) // 60)
+        if days != 0:
+            return f"{ days } д. { hours } ч. { minutes } м."
+        return f"{ hours } ч. { minutes } м."
